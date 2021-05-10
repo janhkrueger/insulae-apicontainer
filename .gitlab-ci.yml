@@ -1,0 +1,41 @@
+---
+include:
+  - template: Container-Scanning.gitlab-ci.yml
+
+stages:
+  - build-image
+  - test
+
+image: docker
+services:
+- docker:dind
+
+# set up dev environment - run for every branch except master
+.dev_env: &dev_env
+  environment: dev
+  variables:
+    env_tag: 'dev'
+  only:
+    - main
+    - tags
+
+# set varialbes
+variables:
+  GIT_SSL_NO_VERIFY: "true"
+  IMAGE: registry.gitlab.com/janhkrueger/insulae-apicontainer/main:dev
+
+#build and push dev image
+build-dev-image:
+
+  stage: build-image
+  <<: *dev_env
+  script:
+    - docker login -u $CI_REGISTRY_USER -p $CI_REGISTRY_PASSWORD $CI_REGISTRY
+    - echo "Building container image $container_image"
+    - docker build -t $IMAGE .
+    - docker push $IMAGE
+
+container_scanning:
+  variables:
+    GIT_STRATEGY: fetch
+    DOCKER_IMAGE: registry.gitlab.com/janhkrueger/insulae-apicontainer/main:dev

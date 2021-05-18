@@ -23,7 +23,6 @@ services:
 variables:
   GIT_SSL_NO_VERIFY: "true"
   IMAGE: registry.gitlab.com/janhkrueger/insulae-apicontainer/main:dev
-  CS_MAJOR_VERSION: 4
 
 #build and push dev image
 build-dev-image:

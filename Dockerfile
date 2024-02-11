@@ -8,7 +8,7 @@ RUN TZ=UTC  && \
     apt-get -y --no-install-recommends install libpqxx-dev curl libcurl4-openssl-dev libcurl4 libssl-dev git cmake make build-essential autoconf automake software-properties-common gnu-standards && \
     apt-get -y --fix-missing --no-install-recommends install libatomic1 && \ 
     git config --global http.sslverify false && \
-    git clone https://gitlab.com/insulae_dev/external-components/curlpp.git && \
+    git clone --depth 1 https://github.com/jpbarrette/curlpp.git && \
     cd curlpp/ && \
     mkdir build && \
     cd build/ && \
@@ -19,7 +19,7 @@ RUN TZ=UTC  && \
     cd .. && \    
     cd .. && \    
     rm -rf curlpp && \ 
-    git clone https://gitlab.com/insulae_dev/external-components/libvault.git && \
+    git clone --depth 1 https://github.com/abedra/libvault.git && \
     cd libvault/ && \
     mkdir build && \
     cd build/ && \
